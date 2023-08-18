@@ -1,5 +1,21 @@
-.side-nav {
-  display: flex;
-  background-color: red;
-  height: 70px;
+mat-toolbar {
+  background: rebeccapurple;
+  color: white;
+}
+mat-sidenav {
+  background-color: rgb(177, 137, 216);
+  padding: 16px;
+  width: 200px;
+}
+mat-sidenav-content {
+  background-color: rgb(193, 216, 110);
+  margin: 16px;
+
+  border-radius: 10px;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+img {
+  height: 75px;
 }
