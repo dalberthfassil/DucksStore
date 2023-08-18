@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>Crear Patito</h1>
+<div mat-dialog-content>
+  <p>Agregar un titulo para el patito</p>
+  <form [formGroup]="duckForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="title" required />
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <mat-error *ngIf="duckForm.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Color</mat-label>
+      <mat-select formControlName="color">
+        <mat-option *ngFor="let color of colors" [value]="color">
+          {{ color }}</mat-option
+        >
+      </mat-select>
+      <mat-error *ngIf="duckForm.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Size</mat-label>
+      <mat-select formControlName="size">
+        <mat-option *ngFor="let size of sizes" [value]="size">
+          {{ size }}</mat-option
+        >
+      </mat-select>
+      <mat-error *ngIf="duckForm.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Cantidad de Stock</mat-label>
+      <input
+        matInput
+        type="number"
+        class="example-right-align"
+        placeholder="0"
+        formControlName="lot"
+      />
+      <mat-error *ngIf="duckForm.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Precio</mat-label>
+      <input
+        matInput
+        type="number"
+        class="example-right-align"
+        placeholder="0"
+        formControlName="price"
+      />
+      <span matTextPrefix>$&nbsp;</span>
+      <span matTextSuffix>.00</span>
+      <mat-error *ngIf="duckForm.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">No Thanks</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSave()"
+    [disabled]="duckForm.invalid"
+    cdkFocusInitial
+  >
+    Agregar
+  </button>
+</div>

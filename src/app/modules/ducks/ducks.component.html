@@ -1,3 +1,7 @@
 <div class="main-content">
-  <app-ducks-list [ducks]="ducks"></app-ducks-list>
+  <button mat-raised-button color="primary" (click)="openAddDuck()">
+    Agregar Patito
+  </button>
+
+  <app-ducks-list *ngIf="ducks.length > 0" [ducks]="ducks"></app-ducks-list>
 </div>

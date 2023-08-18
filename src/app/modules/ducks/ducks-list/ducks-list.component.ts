@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Colors, Ducks, Sizes } from 'src/app/core/modules/ducks.interface';
+import { DucksRepositoryService } from 'src/app/core/services/ducks-repository.service';
 
 @Component({
   selector: 'app-ducks-list',
@@ -7,6 +8,8 @@ import { Colors, Ducks, Sizes } from 'src/app/core/modules/ducks.interface';
   styleUrls: ['./ducks-list.component.css'],
 })
 export class DucksListComponent implements OnInit {
+  constructor() {}
+  dataSource: Ducks[] = [];
   @Input() ducks: Ducks[] = [
     {
       id: 1,
@@ -18,9 +21,20 @@ export class DucksListComponent implements OnInit {
       isErased: true,
     },
   ];
-  displayedColumns: string[] = ['id', 'title', 'color', 'size'];
-  dataSource: Ducks[] = [...this.ducks];
+  displayedColumns: string[] = [
+    'id',
+    'title',
+    'color',
+    'size',
+    'lot',
+    'price',
+    'actions',
+  ];
+
   ngOnInit() {
-    console.log('data', this.ducks);
+    this.dataSource = this.ducks.map((duck) => ({
+      ...duck,
+      actions: '',
+    }));
   }
 }
