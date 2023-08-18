@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "color": "Rojo",
+    "size": "XLarge",
+    "price": 10,
+    "lot": 5,
+    "isErased": false,
+    "title": "Pato Rojo Gigante"
+  },
+  {
+    "id": 2,
+    "color": "Verde",
+    "size": "Large",
+    "price": 8,
+    "lot": 10,
+    "isErased": false,
+    "title": "Pato Verde Grande"
+  },
+  {
+    "id": 3,
+    "color": "Amarillo",
+    "size": "Medium",
+    "price": 6,
+    "lot": 3,
+    "isErased": false,
+    "title": "Pato Amarillo Mediano"
+  },
+  {
+    "id": 4,
+    "color": "Negro",
+    "size": "Small",
+    "price": 5,
+    "lot": 15,
+    "isErased": false,
+    "title": "Pato Negro Pequeño"
+  },
+  {
+    "id": 5,
+    "color": "Rojo",
+    "size": "Xsmall",
+    "price": 3,
+    "lot": 7,
+    "isErased": false,
+    "title": "Pato Rojo Mini"
+  },
+  {
+    "id": 6,
+    "color": "Verde",
+    "size": "Large",
+    "price": 8,
+    "lot": 8,
+    "isErased": false,
+    "title": "Pato Verde Grande"
+  },
+  {
+    "id": 7,
+    "color": "Amarillo",
+    "size": "Medium",
+    "price": 6,
+    "lot": 4,
+    "isErased": false,
+    "title": "Pato Amarillo Mediano"
+  },
+  {
+    "id": 8,
+    "color": "Negro",
+    "size": "Small",
+    "price": 5,
+    "lot": 12,
+    "isErased": false,
+    "title": "Pato Negro Pequeño"
+  },
+  {
+    "id": 9,
+    "color": "Rojo",
+    "size": "Xsmall",
+    "price": 3,
+    "lot": 6,
+    "isErased": false,
+    "title": "Pato Rojo Mini"
+  },
+  {
+    "id": 10,
+    "color": "Verde",
+    "size": "Large",
+    "price": 8,
+    "lot": 9,
+    "isErased": false,
+    "title": "Pato Verde Grande"
+  },
+  {
+    "id": 11,
+    "color": "Amarillo",
+    "size": "Medium",
+    "price": 6,
+    "lot": 2,
+    "isErased": false,
+    "title": "Pato Amarillo Mediano"
+  },
+  {
+    "id": 12,
+    "color": "Negro",
+    "size": "Small",
+    "price": 5,
+    "lot": 11,
+    "isErased": false,
+    "title": "Pato Negro Pequeño"
+  },
+  {
+    "id": 13,
+    "color": "Rojo",
+    "size": "Xsmall",
+    "price": 3,
+    "lot": 5,
+    "isErased": false,
+    "title": "Pato Rojo Mini"
+  },
+  {
+    "id": 14,
+    "color": "Verde",
+    "size": "Large",
+    "price": 8,
+    "lot": 4,
+    "isErased": false,
+    "title": "Pato Verde Grande"
+  },
+  {
+    "id": 15,
+    "color": "Amarillo",
+    "size": "Medium",
+    "price": 6,
+    "lot": 8,
+    "isErased": false,
+    "title": "Pato Amarillo Mediano"
+  },
+  {
+    "id": 16,
+    "color": "Negro",
+    "size": "Small",
+    "price": 5,
+    "lot": 10,
+    "isErased": false,
+    "title": "Pato Negro Pequeño"
+  },
+  {
+    "id": 17,
+    "color": "Rojo",
+    "size": "Xsmall",
+    "price": 3,
+    "lot": 9,
+    "isErased": false,
+    "title": "Pato Rojo Mini"
+  },
+  {
+    "id": 18,
+    "color": "Verde",
+    "size": "Large",
+    "price": 8,
+    "lot": 6,
+    "isErased": false,
+    "title": "Pato Verde Grande"
+  },
+  {
+    "id": 19,
+    "color": "Amarillo",
+    "size": "Medium",
+    "price": 6,
+    "lot": 1,
+    "isErased": false,
+    "title": "Pato Amarillo Mediano"
+  },
+  {
+    "id": 20,
+    "color": "Negro",
+    "size": "Small",
+    "price": 5,
+    "lot": 14,
+    "isErased": false,
+    "title": "Pato Negro Pequeño"
+  }
+]

@@ -1,0 +1,5 @@
+.side-nav {
+  display: flex;
+  background-color: red;
+  height: 70px;
+}
