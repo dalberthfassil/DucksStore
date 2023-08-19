@@ -5,6 +5,7 @@ import { DucksRepositoryService } from 'src/app/core/services/ducks-repository.s
 import { AddEditDuckComponent } from './add-edit-duck/add-edit-duck.component';
 import { Subscription, map } from 'rxjs';
 import { MatTable } from '@angular/material/table';
+import { YesNoQuestionDialogComponent } from 'src/app/shared/components/yes-no-question-dialog/yes-no-question-dialog.component';
 
 @Component({
   selector: 'app-ducks',
@@ -59,6 +60,18 @@ export class DucksComponent implements OnInit {
       }
     });
   }
+  openDialogToDelete(duckId: number) {
+    const dialogRef = this.matDialog.open(YesNoQuestionDialogComponent, {
+      data: '',
+    });
+    dialogRef.afterClosed().subscribe((resp: boolean) => {
+      console.log('The dialog delete close', resp);
+      if (resp) {
+        this.onDeleteDuck(duckId);
+      }
+    });
+    ('');
+  }
 
   addDuck(duck: Ducks) {
     this.ducksRepository.addDuck(duck).subscribe(
@@ -97,6 +110,19 @@ export class DucksComponent implements OnInit {
       if (item) {
         this.onUpdateDuck(item);
       }
+    });
+  }
+  applyFilter(filter: any) {
+    console.log(filter.target.value);
+    const filterValue = filter.target.value;
+    this.dataSource = this.ducks.filter((item) => {
+      return (
+        item.title.toLowerCase().includes(filterValue) ||
+        item.color.toLowerCase().includes(filterValue) ||
+        item.size.toLowerCase().includes(filterValue) ||
+        item.price.toString().includes(filterValue) ||
+        item.lot.toString().includes(filterValue)
+      );
     });
   }
 }

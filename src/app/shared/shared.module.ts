@@ -4,9 +4,16 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from './modules/angular-material/angular-material.module';
 import { AddUnitsPipe } from './pipes/add-units.pipe';
-const elements = [SideNavComponent, AddUnitsPipe];
+import { YesNoQuestionDialogComponent } from './components/yes-no-question-dialog/yes-no-question-dialog.component';
+import { LotOrderPipe } from './pipes/lot-order.pipe';
+const elements = [
+  SideNavComponent,
+  AddUnitsPipe,
+  YesNoQuestionDialogComponent,
+  LotOrderPipe,
+];
 @NgModule({
-  declarations: [SideNavComponent, AddUnitsPipe],
+  declarations: [...elements],
   imports: [CommonModule, RouterModule, AngularMaterialModule],
   exports: [...elements],
 })

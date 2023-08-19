@@ -2,11 +2,14 @@
   <button mat-raised-button color="primary" (click)="openDialogToAdd()">
     Agregar Patito
   </button>
-
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="filter" />
+  </mat-form-field>
   <table
     id="ducks-table"
     mat-table
-    [dataSource]="dataSource"
+    [dataSource]="dataSource | lotOrder : 'desc'"
     class="mat-elevation-z8"
     *ngIf="dataSource.length > 0"
   >
@@ -57,7 +60,7 @@
           mat-mini-fab
           color="warn"
           aria-label="delete button"
-          (click)="onDeleteDuck(element.id)"
+          (click)="openDialogToDelete(element.id)"
         >
           <mat-icon>delete</mat-icon>
         </button>

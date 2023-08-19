@@ -29,3 +29,8 @@ table {
     box-shadow: 0 0 20px yellow; /* Resplandor amarillo */
   }
 }
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
