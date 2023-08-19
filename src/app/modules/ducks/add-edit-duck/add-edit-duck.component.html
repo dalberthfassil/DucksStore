@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Crear Patito</h1>
+<h1 mat-dialog-title>{{ data ? "Editar" : "Crear" }} Patito</h1>
 <div mat-dialog-content>
   <p>Agregar un titulo para el patito</p>
   <form [formGroup]="duckForm">

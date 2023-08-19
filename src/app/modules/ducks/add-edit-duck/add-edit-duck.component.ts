@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Colors, Ducks, Sizes } from 'src/app/core/modules/ducks.interface';
@@ -8,19 +8,37 @@ import { Colors, Ducks, Sizes } from 'src/app/core/modules/ducks.interface';
   templateUrl: './add-edit-duck.component.html',
   styleUrls: ['./add-edit-duck.component.css'],
 })
-export class AddEditDuckComponent {
+export class AddEditDuckComponent implements OnInit {
   colors = Object.values(Colors);
   sizes = Object.values(Sizes);
   constructor(
     public dialogRef: MatDialogRef<AddEditDuckComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Ducks
   ) {}
+
+  ngOnInit() {
+    console.log(this.data);
+  }
   duckForm = new FormGroup({
-    title: new FormControl(this.data.title || '', [Validators.required]),
-    color: new FormControl(this.data.color || '', [Validators.required]),
-    size: new FormControl(this.data.size || '', [Validators.required]),
-    price: new FormControl(this.data.price || null, [Validators.required]),
-    lot: new FormControl(this.data.lot || null, [Validators.required]),
+    title: new FormControl(
+      { value: this.data?.title || '', disabled: !!this.data },
+      [Validators.required]
+    ),
+    color: new FormControl(
+      { value: this.data?.color || '', disabled: !!this.data },
+      [Validators.required]
+    ),
+    size: new FormControl(
+      { value: this.data?.size || '', disabled: !!this.data },
+      [Validators.required]
+    ),
+    price: new FormControl(
+      { value: this.data?.price || null, disabled: false },
+      [Validators.required]
+    ),
+    lot: new FormControl({ value: this.data?.lot || null, disabled: false }, [
+      Validators.required,
+    ]),
   });
 
   getErrorMessage(): string {
@@ -28,12 +46,12 @@ export class AddEditDuckComponent {
   }
   private getDuckFromForm(): Ducks {
     return {
-      id: 0,
-      title: this.duckForm.value.title ?? '',
-      color: this.duckForm.value.color ?? Colors.Black,
-      size: this.duckForm.value.size ?? Sizes.Large,
-      price: this.duckForm.value.price ?? 0,
-      lot: this.duckForm.value.lot ?? 0,
+      id: this.data.id ?? 0,
+      title: this.duckForm.value.title ?? this.data.title,
+      color: this.duckForm.value.color ?? this.data.color,
+      size: this.duckForm.value.size ?? this.data.size,
+      price: this.duckForm.value.price ?? this.data.price,
+      lot: this.duckForm.value.lot ?? this.data.lot,
       isErased: false,
     };
   }

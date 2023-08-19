@@ -1,9 +1,10 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Ducks } from 'src/app/core/modules/ducks.interface';
 import { DucksRepositoryService } from 'src/app/core/services/ducks-repository.service';
 import { AddEditDuckComponent } from './add-edit-duck/add-edit-duck.component';
-import { Subscription } from 'rxjs';
+import { Subscription, map } from 'rxjs';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-ducks',
@@ -12,6 +13,19 @@ import { Subscription } from 'rxjs';
 })
 export class DucksComponent implements OnInit {
   ducks: Ducks[] = [];
+  currentDuck = new Set<Ducks>();
+  dataSource: Ducks[] = [];
+  @ViewChild(MatTable) table!: MatTable<Ducks>;
+  itemUpdated = -1;
+  displayedColumns: string[] = [
+    'id',
+    'title',
+    'color',
+    'size',
+    'lot',
+    'price',
+    'actions',
+  ];
   private stateSubscription?: Subscription;
   constructor(
     private ducksRepository: DucksRepositoryService,
@@ -22,17 +36,21 @@ export class DucksComponent implements OnInit {
     console.log('on init duck padre');
     this.stateSubscription = this.ducksRepository
       .getDucks()
+      .pipe(map((data) => data.filter((duck) => !duck.isErased)))
       .subscribe((resp) => {
         this.ducks = resp;
-        console.log('on init resp ', resp);
+        this.dataSource = this.ducks.map((duck) => ({
+          ...duck,
+          actions: '',
+        }));
       });
   }
   ngOnDestroy() {
     if (this.stateSubscription) this.stateSubscription.unsubscribe();
   }
-  openAddDuck() {
+  openDialogToAdd() {
     const dialogRef = this.matDialog.open(AddEditDuckComponent, {
-      data: { name: 'this.name', animal: 'asdf' },
+      data: '',
     });
     dialogRef.afterClosed().subscribe((item: Ducks) => {
       console.log('The dialog was closed');
@@ -41,14 +59,44 @@ export class DucksComponent implements OnInit {
       }
     });
   }
+
   addDuck(duck: Ducks) {
     this.ducksRepository.addDuck(duck).subscribe(
       (resp) => {
         console.log(resp);
+        const index = this.ducks.findIndex((item) => {
+          return (
+            item.id == resp.id &&
+            item.color == resp.color &&
+            item.size == resp.size &&
+            item.price == resp.price
+          );
+        });
+        this.itemUpdated = index;
       },
       (error) => {
         alert(error);
       }
     );
+  }
+  onUpdateDuck(duck: Ducks) {
+    this.ducksRepository.updateDuck(duck);
+    const index = this.ducks.findIndex((item) => {
+      return item.id == duck.id;
+    });
+    this.itemUpdated = index;
+  }
+  onDeleteDuck(duckId: number) {
+    this.ducksRepository.deleteDuck(duckId);
+  }
+  openEditDuck(item: Ducks) {
+    const dialogRef = this.matDialog.open(AddEditDuckComponent, {
+      data: item,
+    });
+    dialogRef.afterClosed().subscribe((item: Ducks) => {
+      if (item) {
+        this.onUpdateDuck(item);
+      }
+    });
   }
 }

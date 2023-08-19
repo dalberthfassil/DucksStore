@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Ducks } from '../modules/ducks.interface';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +15,7 @@ export class DucksRepositoryService {
 
   getDucks(): Observable<Ducks[]> {
     const resp = this.httpService.get<Ducks[]>(this.baseUrl);
+
     resp.subscribe((data) => {
       this.ducks = data;
       this.ducksSubject.next(this.ducks);
@@ -46,14 +47,66 @@ export class DucksRepositoryService {
 
       if (updateDuck) {
         this.ducks = updateDuck;
+        this.ducksSubject.next(this.ducks);
+        return of(this.ducks[existinDuck]);
       }
-      this.ducksSubject.next(this.ducks);
-      return of(this.ducks[existinDuck]);
     }
 
-    duck.id = Date.now();
+    const newId = this.ducks[this.ducks.length - 1].id + 1;
+
+    duck.id = newId;
     this.ducks = [...this.ducks, duck];
     this.ducksSubject.next(this.ducks);
     return of(duck);
+  }
+  updateDuck(duck: Ducks) {
+    const existinDuck = this.ducks.findIndex((item) => {
+      return item.id == duck.id;
+    });
+    //already exists
+    if (existinDuck >= 0) {
+      const updateDuck = this.ducks.map((item) => {
+        if (item.id == duck.id) {
+          return {
+            ...item,
+            lot: duck.lot,
+            price: duck.price,
+          };
+        }
+        return item;
+      });
+
+      if (updateDuck) {
+        this.ducks = updateDuck;
+        this.ducksSubject.next(this.ducks);
+        console.log('was updatedc');
+      }
+    }
+  }
+  deleteDuck(duckId: number) {
+    console.log('para eliminar', duckId);
+    const existinDuck = this.ducks.findIndex((item) => {
+      return item.id == duckId;
+    });
+
+    //already exists
+    if (existinDuck >= 0) {
+      const updateDuck = this.ducks.map((item) => {
+        if (item.id == duckId) {
+          return {
+            ...item,
+            isErased: true,
+          };
+        }
+        return item;
+      });
+
+      if (updateDuck) {
+        this.ducks = updateDuck;
+        this.ducksSubject.next(this.ducks);
+        console.log('was deleted');
+        console.log(this.ducks);
+      }
+    }
   }
 }
