@@ -66,6 +66,6 @@
     [disabled]="duckForm.invalid"
     cdkFocusInitial
   >
-    Agregar
+    {{ data ? "Editar" : "Agregar" }}
   </button>
 </div>
