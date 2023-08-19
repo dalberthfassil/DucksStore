@@ -9,7 +9,7 @@
   <table
     id="ducks-table"
     mat-table
-    [dataSource]="dataSource | lotOrder : 'desc'"
+    [dataSource]="dataSource | lotOrder : orderPipe.descendente"
     class="mat-elevation-z8"
     *ngIf="dataSource.length > 0"
   >

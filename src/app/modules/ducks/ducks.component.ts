@@ -1,11 +1,12 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Ducks } from 'src/app/core/modules/ducks.interface';
+import { Ducks, OrderType } from 'src/app/core/modules/ducks.interface';
 import { DucksRepositoryService } from 'src/app/core/services/ducks-repository.service';
 import { AddEditDuckComponent } from './add-edit-duck/add-edit-duck.component';
 import { Subscription, map } from 'rxjs';
 import { MatTable } from '@angular/material/table';
 import { YesNoQuestionDialogComponent } from 'src/app/shared/components/yes-no-question-dialog/yes-no-question-dialog.component';
+import { LotOrderPipe } from './../../shared/pipes/lot-order.pipe';
 
 @Component({
   selector: 'app-ducks',
@@ -16,6 +17,7 @@ export class DucksComponent implements OnInit {
   ducks: Ducks[] = [];
   currentDuck = new Set<Ducks>();
   dataSource: Ducks[] = [];
+  orderPipe = OrderType;
   @ViewChild(MatTable) table!: MatTable<Ducks>;
   itemUpdated = -1;
   displayedColumns: string[] = [
@@ -34,7 +36,6 @@ export class DucksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('on init duck padre');
     this.stateSubscription = this.ducksRepository
       .getDucks()
       .pipe(map((data) => data.filter((duck) => !duck.isErased)))
@@ -54,7 +55,6 @@ export class DucksComponent implements OnInit {
       data: '',
     });
     dialogRef.afterClosed().subscribe((item: Ducks) => {
-      console.log('The dialog was closed');
       if (item) {
         this.addDuck(item);
       }
@@ -65,7 +65,6 @@ export class DucksComponent implements OnInit {
       data: '',
     });
     dialogRef.afterClosed().subscribe((resp: boolean) => {
-      console.log('The dialog delete close', resp);
       if (resp) {
         this.onDeleteDuck(duckId);
       }
@@ -76,7 +75,6 @@ export class DucksComponent implements OnInit {
   addDuck(duck: Ducks) {
     this.ducksRepository.addDuck(duck).subscribe(
       (resp) => {
-        console.log(resp);
         const index = this.ducks.findIndex((item) => {
           return (
             item.id == resp.id &&
@@ -94,9 +92,7 @@ export class DucksComponent implements OnInit {
   }
   onUpdateDuck(duck: Ducks) {
     this.ducksRepository.updateDuck(duck);
-    const index = this.ducks.findIndex((item) => {
-      return item.id == duck.id;
-    });
+    const index = this.findDuckIndexById(duck.id);
     this.itemUpdated = index;
   }
   onDeleteDuck(duckId: number) {
@@ -112,8 +108,16 @@ export class DucksComponent implements OnInit {
       }
     });
   }
+  findDuckIndexById(id: number) {
+    const sortedData = this.dataSource.slice();
+
+    const orderedData = new LotOrderPipe().transform(
+      sortedData,
+      this.orderPipe.descendente
+    );
+    return orderedData.findIndex((item) => item.id === id);
+  }
   applyFilter(filter: any) {
-    console.log(filter.target.value);
     const filterValue = filter.target.value;
     this.dataSource = this.ducks.filter((item) => {
       return (

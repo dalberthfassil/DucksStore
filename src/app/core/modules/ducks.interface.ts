@@ -22,3 +22,7 @@ export enum Sizes {
   Small = 'Small',
   Xsmall = 'Xsmall',
 }
+export enum OrderType {
+  asendente = 'asc',
+  descendente = 'desc',
+}
